@@ -58,7 +58,7 @@ public class Controller {
     public void addLesson(ActionEvent event) throws IOException{
         date=dateField.getText();
         hour=hourField.getText();
-        key=dateField.getText();
+        key=keyField.getText();
         info=infoField.getText();
         //TODO: Repair if and add better check functions
         if(true || checkStandard(date,hour,key)){
@@ -71,13 +71,9 @@ public class Controller {
         }
      }
      public void sortBase() throws IOException {
-        System.out.println("TEST");
        Path inputPath=Paths.get("./base.txt");
        List<String>lines=Files.readAllLines(inputPath,Charset.forName("UTF-8"));
        Collections.sort(lines);
-       for(int i=0;i<lines.size();i++){
-           System.out.println(lines.get(i));
-       }
      }
      public boolean checkToSwap(int day1,int mounth1, int year1,int day2, int mounth2, int year2){
         if(year1>=year2){
@@ -136,9 +132,9 @@ public class Controller {
                 date="";
                 date=date+tmp.charAt(6)+tmp.charAt(7)+tmp.charAt(8)+tmp.charAt(9);
                 date+="-";
-                date+=tmp.charAt(3)+tmp.charAt(4);
+                date=date+tmp.charAt(3)+tmp.charAt(4);
                 date+="-";
-                date+=tmp.charAt(0)+tmp.charAt(1);
+                date=date+tmp.charAt(0)+tmp.charAt(1);
                 String lessonString=date+"/"+hour+"/"+key+"/"+info+"\n";
                 fileWriter.append(lessonString);
                 fileWriter.close();
@@ -170,24 +166,156 @@ public class Controller {
         mainLabel.setTextFill((Color.valueOf("#e68e8e")));
         group.getChildren().add(mainLabel);
         group.setStyle("-fx-background-color:#2d3447");
-        for(int i=0;i<=1;i++){
-            Label labelFor=new Label();
-            labelFor=createLabelWithLesson(lines.get(i));
-            labelFor.setLayoutX(50);
-            labelFor.setLayoutY(100);
+        for(int i=0;(i<lines.size())&&(i<3);i++){//TODO: <- version BETA
+            //date:
+            Label labelOnLesson=new Label();
+            labelOnLesson=createLabelWithLessonDate(lines.get(i));
+            labelOnLesson.setLayoutX(50+320*i);
+            labelOnLesson.setLayoutY(60);
+            group.getChildren().add(labelOnLesson);
+            //hour
+            Label labelOnLessonWithhour=new Label();
+            labelOnLessonWithhour=createLabelWithLessonHour(lines.get(i));
+            labelOnLessonWithhour.setLayoutX(50+320*i);
+            labelOnLessonWithhour.setLayoutY(100);
+            group.getChildren().add(labelOnLessonWithhour);
+            //key:
+            Label labelOnLessonWithKey=new Label();
+            labelOnLessonWithKey=createLabelWithLessonKey(lines.get(i));
+            labelOnLessonWithKey.setLayoutX(50+320*i);
+            labelOnLessonWithKey.setLayoutY(140);
+            group.getChildren().add(labelOnLessonWithKey);
+            //PhoneNumber:
+            Label labelOnLessonsWithNumber=new Label();
+            labelOnLessonsWithNumber=createLabelWithLessonNumber(lines.get(i));
+            labelOnLessonsWithNumber.setLayoutX(50+320*i);
+            labelOnLessonsWithNumber.setLayoutY(180);
+            group.getChildren().add(labelOnLessonsWithNumber);
         }
         scene=new Scene(group,1000,500);
         scene.setFill(Color.valueOf("#2d3447"));
         stage.setScene(scene);
      }
-     public Label createLabelWithLesson(String line){
+     public Label createLabelWithLessonDate(String line){
         Label label=new Label();
-        String day="",mounth="",year="";
-        day+=line.charAt(8)+line.charAt(9);
-        mounth+=line.charAt(5)+line.charAt(6);
-        year+=line.charAt(0)+line.charAt(1)+line.charAt(2)+line.charAt(3);
-        label.setText(day+"/"+mounth+"/"+year);
+        String date="";
+        date=date+line.charAt(8)+line.charAt(9);
+        date+="-";
+        date=date+line.charAt(5)+line.charAt(6);
+        date+="-";
+        date=date+line.charAt(0)+line.charAt(1)+line.charAt(2)+line.charAt(3);
+        label.setText("Data: "+date);
+        label.setTextFill(Color.valueOf("#e68e8e"));
+        label.setStyle("-fx-font: 20 arial;");
         return label;
      }
-
+     public Label createLabelWithLessonHour(String line){
+        Label label=new Label();
+        String hour="";
+        hour=hour+line.charAt(11)+line.charAt(12);
+        hour+=":";
+        hour=hour+line.charAt(14)+line.charAt(15);
+        label.setText("Hour: "+hour);
+        label.setTextFill(Color.valueOf("#e68e8e"));
+        label.setStyle("-fx-font: 20 arial;");
+        return label;
+     }
+     public Label createLabelWithLessonNumber(String lineFromBase) throws IOException {
+         String line="";
+        //findInKeys:
+        String key="";
+        int numbersOfPoins=0;
+        int indexFirstLetterOfKey=0;
+        for(int i=0;i<lineFromBase.length();i++){
+            if(lineFromBase.charAt(i)=='/'){
+                numbersOfPoins++;
+            }
+            if(numbersOfPoins==2){
+                indexFirstLetterOfKey=i;
+                break;
+            }
+        }
+        indexFirstLetterOfKey++;
+        for(int i=indexFirstLetterOfKey;i<lineFromBase.length();i++){
+            if(lineFromBase.charAt(i)=='/'){
+                break;
+            }else{
+                key+=lineFromBase.charAt(i);
+            }
+        }
+        System.out.println("KEY: "+key);
+        //findKeysinBase
+         Path inputPath=Paths.get("./keys.txt");
+         List<String>lines=Files.readAllLines(inputPath,Charset.forName("UTF-8"));
+         System.out.println(lines.get(0));
+         for(int i=0;i<lines.size();i++){
+             String actualKey="";
+             actualKey=cutActualKey(lines.get(i));
+             System.out.println("Actual key: "+actualKey);
+             if(key.equals(actualKey)){
+                 line=lines.get(i);
+                 break;
+             }
+         }
+         System.out.println("LINE: "+line);
+        Label label=new Label();
+        String number="";
+        int firstPlace=0;
+        for(int i=0;i<line.length();i++){
+            if (line.charAt(i)==':') {
+                firstPlace=i;
+                break;
+            }
+        }
+        firstPlace++;
+        for(int i=firstPlace;i<line.length();i++){
+            if(line.charAt(i)=='/'){
+                break;
+            }else{
+                number+=line.charAt(i);
+            }
+        }
+         label.setText("Phone Number: "+number);
+         label.setTextFill(Color.valueOf("#e68e8e"));
+         label.setStyle("-fx-font: 20 arial;");
+         return label;
+     }
+     public String cutActualKey(String line){
+        String cut="";
+        for(int i=0;i<line.length();i++){
+            if(line.charAt(i)==':'){
+                break;
+            }else{
+                cut+=line.charAt(i);
+            }
+        }
+        return cut;
+     }
+     public Label createLabelWithLessonKey(String lines){
+        Label label=new Label();
+         String key="";
+         int numbersOfPoins=0;
+         int indexFirstLetterOfKey=0;
+         for(int i=0;i<lines.length();i++){
+             if(lines.charAt(i)=='/'){
+                 numbersOfPoins++;
+             }
+             if(numbersOfPoins==2){
+                 indexFirstLetterOfKey=i;
+                 break;
+             }
+         }
+         indexFirstLetterOfKey++;
+         for(int i=indexFirstLetterOfKey;i<lines.length();i++){
+             if(lines.charAt(i)=='/'){
+                 break;
+             }else{
+                 key+=lines.charAt(i);
+             }
+         }
+         label.setText("Key: "+key);
+         label.setTextFill(Color.valueOf("#e68e8e"));
+         label.setStyle("-fx-font: 20 arial;");
+         return label;
+     }
 }

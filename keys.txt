@@ -1,2 +1,3 @@
-JuliaPow:728114333/krotka2B/Leszczyny
+Julia:728114333/krotka2B/Leszczyny
 Michal:607745001/Szyb-Zachodni37F/Czuchow
+Urbi:728283913/Szyb-Zachodni21/Czuchow
