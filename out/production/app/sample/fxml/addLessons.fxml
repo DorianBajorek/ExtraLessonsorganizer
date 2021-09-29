@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="439.0" prefWidth="600.0" style="-fx-background-color: #2d3447;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Label layoutX="191.0" layoutY="24.0" text="Zapisz date zajęć" textFill="#e68e8c">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="30.0" layoutY="105.0" text="Podaj date(DD-MM-RR): " textFill="#e68e8e" />
+      <TextField fx:id="dateField" layoutX="173.0" layoutY="98.0" prefHeight="26.0" prefWidth="139.0" style="-fx-background-color: #758DCD; -fx-text-fill: #e68e8e;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Label layoutX="29.0" layoutY="146.0" text="Podaj godzine(hh-mm): " textFill="#e68e8e" />
+      <TextField fx:id="hourField" layoutX="174.0" layoutY="141.0" prefHeight="26.0" prefWidth="139.0" style="-fx-background-color: #758DCD; -fx-text-fill: #e68e8e;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Label layoutX="33.0" layoutY="186.0" text="Podaj klucz zajęć: " textFill="#e68e8e" />
+      <TextField fx:id="keyField" layoutX="173.0" layoutY="179.0" prefHeight="26.0" prefWidth="139.0" style="-fx-background-color: #758DCD; -fx-text-fill: #e68e8e;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Label layoutX="27.0" layoutY="252.0" text="Dodatkowa informacja: " textFill="#e68e8e" />
+      <TextField fx:id="infoField" layoutX="174.0" layoutY="222.0" prefHeight="76.0" prefWidth="180.0" style="-fx-background-color: #758DCD; -fx-text-fill: #e68e8e;">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </TextField>
+      <Button layoutX="197.0" layoutY="343.0" mnemonicParsing="false" onAction="#addLesson" prefHeight="38.0" prefWidth="157.0" style="-fx-background-color: #3E5081; -fx-text-fill: #e68e8e;" text="Dodaj zajęcia" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="600" maxWidth="775.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="775.0" style="-fx-background-color: #2d3447;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Button layoutX="59.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToScene1" prefHeight="77.0" prefWidth="309.0" style="-fx-background-color: #3E5081;" text="Pokaż kalendarz" textFill="#e68e8e">
+         <font>
+            <Font size="35.0" />
+         </font></Button>
+      <Label layoutX="240.0" layoutY="44.0" prefHeight="98.0" prefWidth="302.0" text="Korepetycje organizer" textFill="#e68e8e">
+         <font>
+            <Font size="30.0" />
+         </font></Label>
+      <Button layoutX="404.0" layoutY="200.0" mnemonicParsing="false" onAction="#switchToScene2" prefHeight="77.0" prefWidth="309.0" style="-fx-background-color: #3E5081;" text="Zapisz date" textFill="#e68e8e">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
